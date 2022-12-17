@@ -1,0 +1,14 @@
+{
+  "CertFolder": "./certs",
+  "ServeFolder": "./serveTest",
+  "Hosts": [
+    {
+      "Folder": "host1",
+      "HostWhitelist": ["host1.com","www.host1.com"]
+    },
+    {
+      "Folder": "host2",
+      "HostWhitelist": ["something.somewhere.com"]
+    }
+  ]
+}
