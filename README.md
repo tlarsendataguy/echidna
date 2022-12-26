@@ -53,3 +53,5 @@ Echidna uses a single JSON configuration file with the following structure:
 You can download Echidna for Windows in the Releases section. The program, configuration files, required directories, and sample sites are all included in sample.zip. The sample is the easiest way to get started with Echidna.
 
 Executables are not provided for Linux or Unix. You will need to build and deploy those yourself.
+
+To deploy Echidna as a service on Windows, use the [Non-Sucking Service Manager](http://nssm.cc)
