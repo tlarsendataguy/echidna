@@ -99,6 +99,43 @@ func TestRouter(t *testing.T) {
 	}
 }
 
+func TestGitExclusion(t *testing.T) {
+	server, _ := LoadServerFromSettings(`settings.json`)
+	router := server.GenerateRouter()
+	w := &testWriter{}
+	r := getRequestFor(`https://www.host1.com/.gitexclusiontest`)
+	router.ServeHTTP(w, r)
+
+	err := checkResponse(w, 404, `./serveTest/host1/404.html`)
+	if err != nil {
+		t.Fatalf(err.Error())
+	}
+}
+
+func TestPostHomepageShouldFail(t *testing.T) {
+	server, _ := LoadServerFromSettings(`settings.json`)
+	router := server.GenerateRouter()
+	w := &testWriter{}
+	r := requestFor(`https://www.host1.com/`, `POST`)
+	router.ServeHTTP(w, r)
+
+	if expected := 405; w.status != expected {
+		t.Fatalf(`expected status %v but got %v`, expected, w.status)
+	}
+}
+
+func TestPostFilesShouldFail(t *testing.T) {
+	server, _ := LoadServerFromSettings(`settings.json`)
+	router := server.GenerateRouter()
+	w := &testWriter{}
+	r := requestFor(`https://www.host1.com/scripts.js`, `POST`)
+	router.ServeHTTP(w, r)
+
+	if expected := 405; w.status != expected {
+		t.Fatalf(`expected status %v but got %v`, expected, w.status)
+	}
+}
+
 func checkRoute(router *mux.Router, url string) error {
 	match := &mux.RouteMatch{}
 	r := getRequestFor(url)
